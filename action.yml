@@ -1,0 +1,16 @@
+name: 'gomarklint Markdown Linter'
+description: 'Lint Markdown files using gomarklint'
+author: 'shinagawa-web'
+inputs:
+  args:
+    description: 'Arguments to pass to gomarklint'
+    required: false
+    default: '.'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.args }}
+branding:
+  icon: 'book'
+  color: 'blue'

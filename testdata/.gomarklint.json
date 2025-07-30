@@ -1,0 +1,8 @@
+{
+  "minHeadingLevel": 2,
+  "enableLinkCheck": false,
+  "skipLinkPatterns": [],
+  "ignore": [],
+  "output": "text",
+  "enableDuplicateHeadingCheck": false
+}
