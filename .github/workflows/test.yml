@@ -14,5 +14,7 @@ jobs:
       - name: Run gomarklint Action
         uses: ./
         with:
-          args: >-
-            --config testdata/.gomarklint.json testdata/markdown_files
+          args: |
+            --config
+            testdata/.gomarklint.json
+            testdata/markdown_files
