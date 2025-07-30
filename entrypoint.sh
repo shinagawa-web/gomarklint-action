@@ -1,10 +1,13 @@
 #!/bin/sh
 set -e
 
-if [ -f ".gomarklint.json" ]; then
-  echo "✅ Found .gomarklint.json"
+CONFIG_FILE=".gomarklint.json"
+
+if [ -f "$CONFIG_FILE" ]; then
+  echo "✅ Found $CONFIG_FILE"
 else
-  echo "⚠️  .gomarklint.json not found. Proceeding with default config."
+  echo "❌ $CONFIG_FILE not found. This action requires a config file."
+  exit 1
 fi
 
 exec gomarklint "$@"
