@@ -2,7 +2,7 @@ FROM golang:1.22-alpine AS builder
 
 WORKDIR /app
 
-RUN go install github.com/shinagawa-web/gomarklint/cmd/gomarklint@latest
+RUN go install github.com/shinagawa-web/gomarklint@latest
 
 FROM alpine:latest
 RUN apk --no-cache add ca-certificates
