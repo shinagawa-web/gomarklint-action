@@ -2,7 +2,11 @@
   "minHeadingLevel": 2,
   "enableLinkCheck": false,
   "skipLinkPatterns": [],
+  "include": [
+    "README.md",
+    "testdata"
+  ],
   "ignore": [],
   "output": "text",
-  "enableDuplicateHeadingCheck": false
+  "enableDuplicateHeadingCheck": true
 }
