@@ -5,7 +5,7 @@ inputs:
   args:
     description: 'Arguments to pass to gomarklint'
     required: false
-    default: '.'
+    default: ''
 runs:
   using: 'docker'
   image: 'Dockerfile'
