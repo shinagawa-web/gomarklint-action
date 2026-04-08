@@ -1,12 +1,12 @@
 {
-  "minHeadingLevel": 2,
-  "enableLinkCheck": false,
-  "skipLinkPatterns": [],
+  "default": true,
+  "rules": {
+    "external-link": { "enabled": false }
+  },
   "include": [
     "README.md",
     "testdata"
   ],
   "ignore": [],
-  "output": "text",
-  "enableDuplicateHeadingCheck": true
+  "output": "text"
 }
