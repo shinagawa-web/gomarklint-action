@@ -71,7 +71,7 @@ jobs:
 Post lint results as a comment on pull requests. The comment is automatically updated on subsequent runs, avoiding duplicates.
 
 ```yaml
-- uses: shinagawa-web/gomarklint-action@v2
+- uses: shinagawa-web/gomarklint-action@v1
   with:
     comment-on-pr: 'true'
     github-token: ${{ secrets.GITHUB_TOKEN }}
