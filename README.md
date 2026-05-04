@@ -1,47 +1,24 @@
 # gomarklint-action
 
-Lint Markdown files using [gomarklint](https://github.com/shinagawa-web/gomarklint) in GitHub Actions.
-Automate documentation quality checks with minimal setup.
+Catch broken links, dead heading anchors, and formatting issues in your Markdown documentation — automatically, on every pull request.
 
-## Why
+## What it checks
 
-Documentation often drifts out of sync: structure breaks, links rot, anchors vanish.
-This Action enables teams to treat docs like code—fast feedback in pull requests, consistent enforcement in CI, no more silent failures.
+- **External links** — detects URLs that return 4xx/5xx or time out
+- **Heading fragment links** — catches `[see here](#some-heading)` that break when headings are renamed
+- **Formatting** — enforces consistent style across contributors (headings, code fences, emphasis, list markers, and more)
 
-## Features
+Powered by [gomarklint](https://github.com/shinagawa-web/gomarklint), a fast Markdown linter written in Go.
 
-- One-line integration into existing workflows
-- Respects .gomarklint.json config (same rules as local linting)
-- Fails builds when documentation issues are detected
-- Optional PR comment with lint results (created or updated on each run)
-- JSON output support for advanced workflows
-- Lightweight: Docker / Shell entrypoint, no heavy dependencies
+## Quick Start
 
-## Prerequisites
-
-Before using this action, please generate a `.gomarklint.json` config file with:
+**1. Generate a config file** (one-time setup, run locally):
 
 ```bash
 gomarklint init
 ```
 
-This config file is required. If it is missing, the action will fail.
-
-See the [gomarklint documentation](https://github.com/shinagawa-web/gomarklint/blob/main/README.md) for details.
-
-> Tip: After generating .gomarklint.json, customize the include field to specify which directories or files should be linted.
-For example:
-
-```json
-"include": [
-  "README.md",
-  "docs/"
-]
-```
-
-## Quick Start
-
-Create a workflow:
+**2. Add a workflow:**
 
 ```yaml
 # .github/workflows/docs-lint.yml
@@ -57,33 +34,47 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version: '1.23'
-
-      # Runs gomarklint using your .gomarklint.json config
       - uses: shinagawa-web/gomarklint-action@v1
 ```
 
+The action reads your `.gomarklint.json` config and fails the build when issues are found.
+
+> **Note:** `.gomarklint.json` is required. If it is missing, the action will fail. After generating it, set the `include` field to specify which files or directories to lint:
+>
+> ```json
+> "include": ["README.md", "docs/"]
+> ```
+
 ## PR Comment
 
-Post lint results as a comment on pull requests. The comment is automatically updated on subsequent runs, avoiding duplicates.
+Post lint results as a comment on pull requests. The comment is updated on each run — no duplicates.
 
 ```yaml
-- uses: shinagawa-web/gomarklint-action@v1
-  with:
-    comment-on-pr: 'true'
-    github-token: ${{ secrets.GITHUB_TOKEN }}
+jobs:
+  docs-lint:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shinagawa-web/gomarklint-action@v1
+        with:
+          comment-on-pr: 'true'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-> Note: The job needs `pull-requests: write` permission.
+## Why not markdownlint-cli2-action?
 
-```yaml
-permissions:
-  contents: read
-  pull-requests: write
-```
+markdownlint checks formatting only. gomarklint-action also validates external URLs and heading fragment links — the two most common ways documentation silently breaks in production.
+
+| | gomarklint-action | markdownlint-cli2-action |
+|---|:---:|:---:|
+| Formatting rules | ✅ | ✅ |
+| External link checking | ✅ | ❌ |
+| Heading fragment links | ✅ | ❌ |
+| Single binary (no Node.js) | ✅ | ❌ |
+| PR comment | ✅ | ❌ |
 
 ## Inputs
 
