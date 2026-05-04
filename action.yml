@@ -1,5 +1,5 @@
 name: 'gomarklint Markdown Linter'
-description: 'Lint Markdown files using gomarklint'
+description: 'Catch broken links before your readers do.'
 author: 'shinagawa-web'
 inputs:
   args:
